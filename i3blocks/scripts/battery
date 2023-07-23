@@ -1,0 +1,85 @@
+#!/usr/bin/env python3
+
+# A script to show battery usage for i3-blocks
+
+import subprocess
+
+
+charging_style = {
+    "full": ["#008000", ""],
+    "amost_full": ["#228B22", ""],
+    "amost_middle": ["#00FF00", ""],
+    "middle": ["#FFA500", ""],
+    "low": ["#FF4500", ""],
+    "amost_empty": ["#FF0000", ""]
+}
+
+discharging_style = {
+    "full": ["#008000", ""],
+    "amost_full": ["#228B22", ""],
+    "amost_middle": ["#00FF00", ""],
+    "middle": ["#FFA500", ""],
+    "low": ["#FF4500", ""],
+    "amost_empty": ["#FF0000", ""]
+}
+
+
+def fetch_battery_status():
+    """
+    to check if battery is charging
+    :return:
+    """
+    status = subprocess.getoutput("cat /sys/class/power_supply/BAT0/status")
+    return status
+
+
+def fetch_battery_capacity():
+    """
+    to fetch the percentage of remaining power
+    :return:
+    """
+    capacity = subprocess.getoutput("cat /sys/class/power_supply/BAT0/capacity")
+    return int(capacity)
+
+
+def fetch_capacity_tag(capacity):
+    capacity = int(capacity)
+    if capacity <= 15:
+        capacity_tag = "amost_empty"
+    elif capacity <= 45:
+        capacity_tag = "low"
+    elif capacity <= 60:
+        capacity_tag = "middle"
+    elif capacity <= 80:
+        capacity_tag = "amost_middle"
+    elif capacity <= 95:
+        capacity_tag = "amost_full"
+    else:
+        capacity_tag = "full"
+    return capacity_tag
+
+
+def fetch_style(capacity_tag: str, status: str) -> list:
+    if status.lower() in ["charging", "full"]:
+        return charging_style.get(capacity_tag)
+    else:
+        return discharging_style.get(capacity_tag)
+
+
+def generate_bar_string(status: str, capacity: int) -> str:
+    capacity_tag = fetch_capacity_tag(capacity)
+    color, icon = fetch_style(capacity_tag, status)
+    bar_str = f"<span color='{color}'>{icon} {capacity}%</span>"
+    return bar_str
+
+
+def show_battery_status():
+    battery_status = fetch_battery_status()
+    battery_capacity = fetch_battery_capacity()
+    battery_bar_str = generate_bar_string(battery_status, battery_capacity)
+    print(battery_bar_str)
+
+
+if __name__ == "__main__":
+    show_battery_status()
+

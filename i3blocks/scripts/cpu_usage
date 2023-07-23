@@ -1,0 +1,59 @@
+#!/usr/bin/env python3
+
+# A script to show CPU usage for i3-blocks
+
+import psutil
+
+
+def fetch_color(usage_tag: str) -> str:
+    usage_colors = {
+        "highest_load": "#DC143C",
+        "higher_load": "#FF0000",
+        "high_load": "#FF4500",
+        "moderate_load": "#ADFF2F",
+        "low_load": "#32CD32",
+        "lower_load": "#228B22",
+        "lowest_load": "#008000"
+    }
+
+    return usage_colors.get(usage_tag)
+
+
+def fetch_usage_tag(load_avg: float) -> str:
+    if load_avg <= 10:
+        return "lowest_load"
+    elif load_avg <= 30:
+        return "lower_load"
+    elif load_avg <= 45:
+        return "low_load"
+    elif load_avg <= 65:
+        return "moderate_load"
+    elif load_avg <= 75:
+        return "high_load"
+    elif load_avg <= 90:
+        return "higher_load"
+    else:
+        return "highest_load"
+
+
+def fetch_cpu_load_avg():
+    cpu_loads = psutil.cpu_percent(interval=1, percpu=True)
+    cpu_counts = psutil.cpu_count()
+    cpu_load_avg = sum(cpu_loads) / cpu_counts
+    return cpu_load_avg, cpu_counts
+
+
+def generate_usage_string() -> str:
+    usage_label = ""
+    cpu_load_avg, _ = fetch_cpu_load_avg()
+    cpu_tag = fetch_usage_tag(cpu_load_avg)
+    usage_color = fetch_color(cpu_tag)
+
+    message = f"<span color='{usage_color}'>{usage_label} {cpu_load_avg:.2f}%</span>"
+    return message
+
+
+if __name__ == "__main__":
+    msg = generate_usage_string()
+    print(msg)
+

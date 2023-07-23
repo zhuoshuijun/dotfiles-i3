@@ -1,0 +1,56 @@
+#!/usr/bin/env python3
+
+import psutil
+import subprocess
+
+
+def fetch_iface_name():
+    cmd = "ip route |awk '/^default/ {print $5}'"
+    name = subprocess.getoutput(cmd)
+    return name
+
+
+def check_net_up(iface_name):
+    status = psutil.net_if_stats().get(iface_name)
+    return status.isup
+
+
+def fetch_net_ip(iface_name):
+    if not iface_name:
+        return ""
+    net_info = psutil.net_if_addrs().get("ens33")
+    return net_info[0].address
+
+
+def fetch_net_symbol(iface_name, status):
+    if iface_name.startswith("w"):
+        if status:
+            return "󰖩"
+        else:
+            return "󰖪"
+    elif iface_name.startswith("e"):
+        if status:
+            return "󰈁"
+        else:
+            return "󰈂"
+    else:
+        return "Network Down"
+
+
+def generate_net_info():
+    if_name = fetch_iface_name()
+    if_status = check_net_up(if_name)
+    symbol = fetch_net_symbol(if_name, if_status)
+    msg = ""
+    if symbol == "Network Down":
+        msg = f"<span color='#FF0000'>{symbol}</span>"
+    else:
+        if_ip = fetch_net_ip(if_name)
+        msg = f"<span color='#613a84'>{symbol} {if_ip}</span>"
+    return msg
+
+
+if __name__ == "__main__":
+    if_msg = generate_net_info()
+    print(if_msg)
+

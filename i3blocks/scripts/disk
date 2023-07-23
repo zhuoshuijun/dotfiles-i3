@@ -1,0 +1,61 @@
+#!/usr/bin/env python3
+
+# A script to show Disk usage for i3-blocks
+
+import psutil
+
+
+def fetch_color(usage_tag: str) -> str:
+    usage_colors = {
+        "highest_load": "#DC143C",
+        "higher_load": "#FF0000",
+        "high_load": "#FF4500",
+        "moderate_load": "#ADFF2F",
+        "low_load": "#32CD32",
+        "lower_load": "#228B22",
+        "lowest_load": "#008000"
+    }
+
+    return usage_colors.get(usage_tag)
+
+
+def fetch_usage_tag(load_avg: float) -> str:
+    if load_avg <= 10:
+        return "lowest_load"
+    elif load_avg <= 30:
+        return "lower_load"
+    elif load_avg <= 45:
+        return "low_load"
+    elif load_avg <= 65:
+        return "moderate_load"
+    elif load_avg <= 75:
+        return "high_load"
+    elif load_avg <= 90:
+        return "higher_load"
+    else:
+        return "highest_load"
+
+
+def fetch_disk_usage(path):
+    disk_info = psutil.disk_usage(path)
+    disk_total = disk_info.total / 1024**3
+    disk_used = disk_info.used / 1024**3
+    disk_percent = disk_used / disk_total * 100
+
+    return disk_percent, disk_used, disk_total
+
+
+def generate_usage_string(disk_percent, disk_used, disk_total):
+    usage_label = ""
+    usage_tag = fetch_usage_tag(disk_percent)
+    usage_color = fetch_color(usage_tag)
+    message = f"<span color='{usage_color}'>{usage_label} {disk_percent:.2f}%</span>"
+    return message
+
+
+if __name__ == "__main__":
+    target_path = "/home/"
+    percent, used, total = fetch_disk_usage(target_path)
+    msg = generate_usage_string(percent, used, total)
+    print(msg)
+

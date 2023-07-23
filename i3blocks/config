@@ -1,0 +1,48 @@
+# Global properties
+separator=true
+separator_block_width=15
+
+# Show IP
+[ip]
+command=~/.config/i3blocks/scripts/iface
+markup=pango
+interval=once
+
+# Show the state of CPUs
+[cpu_usage]
+command=~/.config/i3blocks/scripts/cpu_usage
+markup=pango
+interval=5
+
+# Show the state of Memory
+[memory]
+command=~/.config/i3blocks/scripts/memory
+markup=pango
+interval=5
+
+# Show the state of disk
+[disk]
+command=~/.config/i3blocks/scripts/disk
+interval=600
+markup=pango
+
+# Show the battery status
+[battery]
+command=~/.config/i3blocks/scripts/battery
+interval=60
+markup=pango
+
+# Show the state of Volume
+[volume]
+command=~/.config/i3blocks/scripts/volume
+label=
+color=#d7c6d8
+interval=once
+signal=1
+
+# Update time every 5 seconds
+[time]
+command=~/.config/i3blocks/scripts/calendar
+color=#d7c6d8
+interval=1
+
