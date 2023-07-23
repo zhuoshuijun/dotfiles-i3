@@ -1,5 +1,7 @@
 # Global properties
 separator=true
+color=#f3f4f5
+markup=none
 separator_block_width=15
 
 # Show IP

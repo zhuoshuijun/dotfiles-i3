@@ -46,7 +46,7 @@ def generate_net_info():
         msg = f"<span color='#FF0000'>{symbol}</span>"
     else:
         if_ip = fetch_net_ip(if_name)
-        msg = f"<span color='#613a84'>{symbol} {if_ip}</span>"
+        msg = f"<span color='#005586'>{symbol} {if_ip}</span>"
     return msg
 
 
