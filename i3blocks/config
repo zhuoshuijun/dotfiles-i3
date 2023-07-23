@@ -12,13 +12,13 @@ interval=once
 [cpu_usage]
 command=~/.config/i3blocks/scripts/cpu_usage
 markup=pango
-interval=5
+interval=10
 
 # Show the state of Memory
 [memory]
 command=~/.config/i3blocks/scripts/memory
 markup=pango
-interval=5
+interval=10
 
 # Show the state of disk
 [disk]
@@ -44,5 +44,5 @@ signal=1
 [time]
 command=~/.config/i3blocks/scripts/calendar
 color=#d7c6d8
-interval=1
+interval=60
 

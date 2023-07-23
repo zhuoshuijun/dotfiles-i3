@@ -1,0 +1,122 @@
+# Settings for window
+window:
+  dimensions:
+    columns: 130
+    lines: 40
+
+  position:
+    x: 1198
+    y: 635
+
+  padding:
+    x: 6
+    y: 6
+
+  decorations: full
+
+  title: Alacritty
+  dynamic_title: false
+
+  # background opacity
+  opacity: 0.95
+
+# Settings for scrolling
+scrolling:
+  history: 10000
+  multiplier: 4
+
+
+# Settings for fonts
+font:
+  normal:
+    family: Hack Nerd Font Propo
+    style: Regular
+
+  bold:
+    family: Hack Nerd Font Propo
+    style: Bold
+
+  italic:
+    family: Hack Nerd Font Propo
+    style: Italic
+
+  bold_italic:
+    family: Hack Nerd Font Propo
+    style: Bold Italic
+
+  size: 6.0
+  #builtin_box_drawing: true
+
+
+# Settings for colors
+colors:
+  # Default colors
+  primary:
+    background: '#0D1117'
+    foreground: '#F5F5F5'
+    dim_foreground: '#828482'
+    bright_foreground: '#eaeaea'
+
+  # Cursor colors
+  cursor:
+    text: CellBackground
+    cursor: CellForeground
+
+  # Vi mode cursor colors
+  vi_mode_cursor:
+   text: CellBackground
+   cursor: CellForeground
+
+  # Search colors
+  search:
+    matches:
+      foreground: '#C9CB0A'
+      background: '#0D1117'
+    focused_match:
+      foreground: '#C9CB0A'
+      background: '#0D1117'
+
+  # Normal colors
+  normal:
+    black:   '0x2e2e2e'
+    red:     '0xeb4129'
+    green:   '0xabe047'
+    yellow:  '0xf6c744'
+    blue:    '0x47a0f3'
+    magenta: '0x7b5cb0'
+    cyan:    '0x64dbed'
+    white:   '0xe5e9f0'
+
+  # Bright colors
+  bright:
+    black:   '0x565656'
+    red:     '0xec5357'
+    green:   '0xc0e17d'
+    yellow:  '0xf9da6a'
+    blue:    '0x49a4f8'
+    magenta: '0xa47de9'
+    cyan:    '0x99faf2'
+    white:   '0xffffff'
+
+
+cursor:
+  style:
+    shape: Underline
+    blinking: On
+    blink_interval: 500
+    blink_timeout: 0
+    # If this is `true`, the cursor will be rendered as a hollow box when the window is not focused.
+    unfocused_hollow: true
+    thickness: 0.35
+
+
+# Live config reload (changes require restart)
+live_config_reload: true
+
+
+# Specify the default shell
+shell:
+  program: /usr/bin/bash
+  args:
+    - --login
+

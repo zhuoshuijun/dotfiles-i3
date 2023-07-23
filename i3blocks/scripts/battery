@@ -4,23 +4,22 @@
 
 import subprocess
 
-
 charging_style = {
-    "full": ["#008000", ""],
-    "amost_full": ["#228B22", ""],
-    "amost_middle": ["#00FF00", ""],
-    "middle": ["#FFA500", ""],
-    "low": ["#FF4500", ""],
-    "amost_empty": ["#FF0000", ""]
+    "full": ["#008000", "󰂅"],
+    "amost_full": ["#228B22", "󰂊"],
+    "amost_middle": ["#00FF00", "󰂉"],
+    "middle": ["#FFA500", "󰢝"],
+    "low": ["#FF4500", "󰂇"],
+    "amost_empty": ["#FF0000", "󰂆"]
 }
 
 discharging_style = {
-    "full": ["#008000", ""],
-    "amost_full": ["#228B22", ""],
-    "amost_middle": ["#00FF00", ""],
-    "middle": ["#FFA500", ""],
-    "low": ["#FF4500", ""],
-    "amost_empty": ["#FF0000", ""]
+    "full": ["#008000", "󰁹"],
+    "amost_full": ["#228B22", "󰂂"],
+    "amost_middle": ["#00FF00", "󰁿"],
+    "middle": ["#FFA500", "󰁾"],
+    "low": ["#FF4500", "󰁼"],
+    "amost_empty": ["#FF0000", "󰁺"]
 }
 
 
@@ -38,11 +37,12 @@ def fetch_battery_capacity():
     to fetch the percentage of remaining power
     :return:
     """
-    capacity = subprocess.getoutput("cat /sys/class/power_supply/BAT0/capacity")
+    capacity = subprocess.getoutput(
+        "cat /sys/class/power_supply/BAT0/capacity")
     return int(capacity)
 
 
-def fetch_capacity_tag(capacity):
+def fetch_capacity_tag(capacity: float):
     capacity = int(capacity)
     if capacity <= 15:
         capacity_tag = "amost_empty"
@@ -78,6 +78,11 @@ def show_battery_status():
     battery_capacity = fetch_battery_capacity()
     battery_bar_str = generate_bar_string(battery_status, battery_capacity)
     print(battery_bar_str)
+
+
+class TestAbc:
+    def __init__(self):
+        self.test = "To do"
 
 
 if __name__ == "__main__":
